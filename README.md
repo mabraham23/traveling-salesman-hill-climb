@@ -1,6 +1,4 @@
 # tsp-mabraham23
-tsp-mabraham23 created by GitHub Classroom
-
 
 This project is an attempt at making a close prediction to the traveling salesman problem using hill-climbing
 
