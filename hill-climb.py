@@ -24,13 +24,18 @@ def neighbors(route):
   return new_route  
 
 # returns an entire route that has been hill climbned 
-def hill_climbing(calc_total_dist, initial_route, dist_table):
+def hill_climbing(calc_total_dist, initial_route, dist_table, size):
   route = initial_route
   u = math.inf 
   improved = True
+  swaps = 0
+  swap_thresh = size * 100
   while improved:
     improved = False
+    if swaps <= swap_thresh:
+      improved = True
     n = neighbors(route)
+    swaps += 1
     c = calc_total_dist(n, dist_table)
     if c < u:
       u = c
@@ -51,6 +56,7 @@ def calc_total_dist(route, dist_table):
 def read_data(file):
   cities = []
   distances = []
+  size = 0
   with open('./data/' + file + '_name.txt', 'r') as f:
     lines = f.readlines()
     i = 0
@@ -59,6 +65,7 @@ def read_data(file):
         cities.append(i)
         distances.append([])
         i += 1 
+        size += 1
 
   with open('./data/' + file + '_dist.txt', 'r') as f:
     raw_lines = f.readlines()
@@ -71,12 +78,12 @@ def read_data(file):
       for j in range(len(words)):
         distances[i].append(int(words[j]))
 
-  return cities, distances 
+  return cities, distances, size
 
 
 def main():
 
-  initial_route, dist_table = read_data("barsoom1024")
+  initial_route, dist_table, size = read_data("barsoom1024")
 
   global best_util_so_far
   global best_route_so_far 
@@ -88,15 +95,15 @@ def main():
   while True:
     random_restarts += 1
     random.shuffle(initial_route)
-    route, u = hill_climbing(calc_total_dist, initial_route, dist_table)
+    route, u = hill_climbing(calc_total_dist, initial_route, dist_table, size)
     if u < best_util_so_far:
-      print(u)
+      # print(u)
       best_util_so_far = u
       best_route_so_far = route
 
 
 def signal_handler(signum, frame):
-  print("random restarts:", random_restarts)
+  # print("random restarts:", random_restarts)
   print(best_util_so_far)
   print(*best_route_so_far, sep=' ')
   quit()
