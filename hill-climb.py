@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
+
 from __future__ import with_statement
 import random
 import signal
 import math
+import sys
 import signal, time
 from contextlib import contextmanager
 
@@ -25,6 +28,7 @@ def neighbors(route):
 
 # returns an entire route that has been hill climbned 
 def hill_climbing(calc_total_dist, initial_route, dist_table, size):
+  print(size)
   route = initial_route
   u = math.inf 
   improved = True
@@ -81,9 +85,14 @@ def read_data(file):
   return cities, distances, size
 
 
-def main():
+def main(argv):
 
-  initial_route, dist_table, size = read_data("barsoom1024")
+  if len(argv) > 1:
+    data_file = argv[1]
+  else:
+    data_file = "barsoom1024"
+
+  initial_route, dist_table, size = read_data(data_file)
 
   global best_util_so_far
   global best_route_so_far 
@@ -108,10 +117,11 @@ def signal_handler(signum, frame):
   print(*best_route_so_far, sep=' ')
   quit()
 
-signal.signal(signal.SIGALRM, signal_handler)
-signal.alarm(120)   
-try:
-    main()
-except:
-  quit()
+if __name__ == "__main__":
+  signal.signal(signal.SIGALRM, signal_handler)
+  signal.alarm(120)   
+  try:
+      main(sys.argv)
+  except:
+    quit()
 
