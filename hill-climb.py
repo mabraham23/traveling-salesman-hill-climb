@@ -28,7 +28,6 @@ def neighbors(route):
 
 # returns an entire route that has been hill climbned 
 def hill_climbing(calc_total_dist, initial_route, dist_table, size):
-  print(size)
   route = initial_route
   u = math.inf 
   improved = True
