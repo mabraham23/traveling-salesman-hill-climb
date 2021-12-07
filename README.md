@@ -7,6 +7,7 @@ This project is an attempt at making a close prediction to the traveling salesma
 call the program with the name of the data set you would like to run e.g. 
 
 ./hill-climb.py barsoom1024
+
 ./hill-climb.py uk12
 
 
