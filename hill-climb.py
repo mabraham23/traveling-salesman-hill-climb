@@ -53,6 +53,11 @@ def calc_total_dist(route, dist_table):
   for i in range(len(route)-1):
     total_dist += dist_table[route[i]][route[i+1]]
   total_dist += dist_table[route[last_i]][route[0]]
+  city_1_value = city_values[route[0]]
+  city_2_value = city_values[route[1]]
+  city_3_value = city_values[route[2]]
+  total_city_values = city_1_value + city_2_value + city_3_value
+  total_dist = total_dist - total_city_values
   return total_dist
 
 # process data from raw data files
@@ -94,6 +99,15 @@ def main(argv):
 
   initial_route, dist_table, size = read_data(data_file)
 
+  global city_values
+
+  city_values = []
+  for i in range(size):
+    rand = random.randint(0,100)
+    city_values.append(rand)
+
+  print("city values:", city_values)
+
   global best_util_so_far
   global best_route_so_far 
   global random_restarts 
@@ -106,7 +120,7 @@ def main(argv):
     random.shuffle(initial_route)
     route, u = hill_climbing(calc_total_dist, initial_route, dist_table, size)
     if u < best_util_so_far:
-      # print(u)
+      print(u)
       best_util_so_far = u
       best_route_so_far = route
 
@@ -119,7 +133,7 @@ def signal_handler(signum, frame):
 
 if __name__ == "__main__":
   signal.signal(signal.SIGALRM, signal_handler)
-  signal.alarm(120)   
+  signal.alarm(20)   
   try:
       main(sys.argv)
   except:
