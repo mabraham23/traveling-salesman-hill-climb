@@ -120,7 +120,7 @@ def main(argv):
     random.shuffle(initial_route)
     route, u = hill_climbing(calc_total_dist, initial_route, dist_table, size)
     if u < best_util_so_far:
-      print(u)
+      # print(u)
       best_util_so_far = u
       best_route_so_far = route
 
