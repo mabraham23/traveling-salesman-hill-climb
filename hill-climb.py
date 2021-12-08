@@ -5,6 +5,7 @@ import random
 import signal
 import math
 import sys
+import os 
 import signal, time
 from contextlib import contextmanager
 
@@ -118,8 +119,34 @@ def signal_handler(signum, frame):
 
 if __name__ == "__main__":
   signal.signal(signal.SIGALRM, signal_handler)
-  signal.alarm(120)   
+  if len(sys.argv) > 1:
+    data_file = sys.argv[1]
+    data_file = "data/" + data_file + "_name.txt"
+    if not os.path.exists(data_file):
+      print("{} does not exist.".format(data_file))
+      quit()
+  
+  else:
+    print("Please enter a data file.")
+    print("Usage: ./hill-climb.py <data_file>")
+    quit()
+
+  if len(sys.argv) > 2:
+    # check if time is valid
+    try:
+      time_limit = int(sys.argv[2])
+      if time_limit <= 0 or time_limit > 3600:
+        raise ValueError
+      signal.alarm(time_limit)
+    except ValueError:
+      print("Invalid time limit:", sys.argv[2] + ".", "Time limit must be an integer between 1 and 3600")
+      quit()
+  else:
+    print("No time limit specified. Defaulting to 120 seconds.")
+    print("Usage: ./hill-climb.py <data_file> <time_limit>")
+    signal.alarm(120)   
   try:
+
       main(sys.argv)
   except:
     quit()
