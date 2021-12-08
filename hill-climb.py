@@ -60,7 +60,7 @@ def read_data(file):
   cities = []
   distances = []
   size = 0
-  with open('./data/' + file + '_name.txt', 'r') as f:
+  with open('./exam-cities/' + file + '_name.txt', 'r') as f:
     lines = f.readlines()
     i = 0
     for line in lines:
@@ -70,7 +70,7 @@ def read_data(file):
         i += 1 
         size += 1
 
-  with open('./data/' + file + '_dist.txt', 'r') as f:
+  with open('./exam-cities/' + file + '_dist.txt', 'r') as f:
     raw_lines = f.readlines()
     lines = []
     for line in raw_lines:
@@ -118,7 +118,7 @@ def signal_handler(signum, frame):
 
 if __name__ == "__main__":
   signal.signal(signal.SIGALRM, signal_handler)
-  signal.alarm(120)   
+  signal.alarm(20)   
   try:
       main(sys.argv)
   except:
