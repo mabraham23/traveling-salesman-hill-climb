@@ -1,16 +1,6 @@
-# tsp-mabraham23
 
-This project is an attempt at making a close prediction to the traveling salesman problem using hill-climbing
+run the following command ./final-exam.bash. It will output it's results to FRODO.txt
 
-1. To run the program do the following:
+it will contain the filename followed by the utility and solution for that puzzle
 
-call the program with the name of the data set you would like to run:
-
-./hill-climb.py middle-earth10
-./hill-climb.py middle-earth15
-./hill-climb.py middle-earth20
-./hill-climb.py middle-earth25
-./hill-climb.py middle-earth30
-
-and then copy and paste the output into the FRODO.txt file under the corresponding header
-
+each puzzle will run for 30 seconds
